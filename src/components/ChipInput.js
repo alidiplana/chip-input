@@ -1,59 +1,60 @@
 // Render Prop
 import React from "react";
 import { useState } from "react";
-import Tag from "./chipInput/tag";
+import CustomTag from "./chipInput/tag";
 import "./chipInput.scss";
+import { Field } from "formik";
 
-const Basic = () => {
-  const [emails, setEmails] = useState([]);
-
+const ChipInput = (props) => {
+  const { name, list } = props;
+  const [isDelete, setIsDelete] = useState(false);
   const [email, setEmail] = useState();
 
-  // const emailUpdate = (e) => {
-  //   // setEmails(e)
-  //   console.log(e.target.value);
-  //   setEmail(e.target.value);
-  // };
-
-  const addEmail = (e) => {
-    if (email.length > 0) {
-      const id = new Date().toISOString();
-      const name = email;
-      const newEmail = { id, name };
-      setEmails((prvEmails) => {
-        return prvEmails.concat(newEmail);
-      });
-    }
-  };
-
   const deleteEmail = (id) => {
-    setEmails((prvEmails) => {
-      return prvEmails.filter((todo) => todo.id !== id);
-    });
+    setIsDelete(true);
+    list.email.splice(id, 1);
+    console.log("test", list);
   };
 
   return (
-    <section className="email-container">
-      {emails.map((email) => {
-        return <Tag email={email} deleteEmail={deleteEmail} />;
-      })}
-      <input
-        className="input"
-        name="email"
-        value={email}
-        onChange={(event) => {
-          setEmail(event.target.value);
-        }}
-        onKeyPress={(e) => {
-          // console.log(e);
-          if (e.key === "Enter") {
-            addEmail();
-            setEmail("");
-          }
-        }}
-      />
-    </section>
+    <Field name={name}>
+      {({ field: { value }, form: { setFieldValue } }) => (
+        <section className="email-container">
+          {isDelete ? setIsDelete(false) : ""}
+          {value.map((email, index) => {
+            return (
+              <CustomTag
+                key={email.id}
+                email={email}
+                deleteEmail={deleteEmail}
+                index={index}
+                // list={value}
+              />
+            );
+          })}
+          <input
+            placeholder="Enter more emails"
+            className="input"
+            {...props}
+            name={name}
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                if (email.length > 0) {
+                  value.push(email);
+                  setFieldValue("email", value);
+                }
+                setEmail("");
+              }
+            }}
+          />
+        </section>
+      )}
+    </Field>
   );
 };
 
-export default Basic;
+export default React.memo(ChipInput);

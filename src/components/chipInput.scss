@@ -7,33 +7,9 @@
   border: solid 1px #ccc;
   background-color: #fff;
 
-  .tags {
-    display: flex;
-    width: min-content;
-    color: #777;
-    margin: 7px 0;
-    gap: 10px;
-    // width: 100px;
-    background-color: #ccc;
-    padding: 2px 8px;
-    border-radius: 2.5px;
-    background-color: #ccc;
-
-    .tag {
-      font-family: Roboto;
-      font-size: 14px;
-      color: #777;
-    }
-
-    .close {
-      color: #777;
-      cursor: pointer;
-    }
-  }
-
   .input {
     border: unset;
-    width: 100px;
+    // width: 100px;
   }
 
   .input:focus-visible,

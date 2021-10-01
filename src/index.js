@@ -1,26 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import "antd/dist/antd.css";
 import ChipInput from "./components/ChipInput";
+// import Example from "./components/formik";
 
 ReactDOM.render(
   <React.StrictMode>
     <Formik
-      initialValues={{ email: "" }}
+      initialValues={{ email: [] }}
       onSubmit={(values) => {
-        // console.log(emails);
-        values.email = "";
-        // console.log(values.email);
+        console.log("submit values: ", values);
       }}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting ,values}) => (
         <Form>
-          <ChipInput name={"email"} />
-          <Field name="text" />
+          <ChipInput name="email" list={values} />
+          <button type="submit">Submit</button>
         </Form>
       )}
     </Formik>
+    {/* <Example /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
