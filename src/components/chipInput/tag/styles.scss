@@ -1,0 +1,25 @@
+.tags {
+  display: flex;
+  box-sizing: border-box;
+  //   min-height: 50px;
+  //   width: min-content;
+  //   color: #777;
+  margin: 7px 0;
+  gap: 10px;
+  // width: 100px;
+  //   background-color: #ccc;
+  padding: 2px 8px;
+  border-radius: 2.5px;
+  //   background-color: #ccc;
+
+  .tag {
+    font-family: Roboto;
+    font-size: 14px;
+    color: #777;
+  }
+
+  .close {
+    color: #777;
+    cursor: pointer;
+  }
+}
