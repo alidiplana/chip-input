@@ -13,9 +13,9 @@ ReactDOM.render(
         console.log("submit values: ", values);
       }}
     >
-      {({ isSubmitting ,values}) => (
+      {({ isSubmitting, values }) => (
         <Form>
-          <ChipInput name="email" list={values} />
+          <ChipInput name="email" />
           <button type="submit">Submit</button>
         </Form>
       )}

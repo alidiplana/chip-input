@@ -1,11 +1,23 @@
-import { Tag } from "antd";
+import { Tag, Tooltip } from "antd";
 import "./styles.scss";
 
 const CustomTag = (props) => {
+  let email = props.email;
+  // console.log("email: ", email);
+  // if (email.length > 10) {
+  //   email[8] = ".";
+  //   email[9] = ".";
+  //   email[10] = ".";
+  // }
   //   console.log("props ", props);
+
   return (
     <Tag className="tags">
-      <div className="tag">{props.email}</div>
+      <div className="tag">
+        <Tooltip title={props.email}>
+          {email.length > 14 ? email.substring(0, 14) + "..." : email}
+        </Tooltip>
+      </div>
       <div onClick={() => props.deleteEmail(props.index)} className="close">
         {
           <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8">

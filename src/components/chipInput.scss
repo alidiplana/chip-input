@@ -9,14 +9,14 @@
 
   .input {
     border: unset;
+    // width: calc(100% - 280px);
+
     // width: 100px;
   }
 
   .input:focus-visible,
   input:focus {
     outline: none;
-    border: unset;
-    border-style: unset;
-    background-color: unset;
+    width: 118px;
   }
 }
