@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  padding: 8px;
   width: 310px;
   border-radius: 5px;
   border: solid 1px #ccc;
@@ -9,6 +10,7 @@
 
   .input {
     border: unset;
+    width: 130px;
     // width: calc(100% - 280px);
 
     // width: 100px;
@@ -17,6 +19,6 @@
   .input:focus-visible,
   input:focus {
     outline: none;
-    width: 118px;
+    width: 130px;
   }
 }
