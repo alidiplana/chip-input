@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import CustomTag from "./chipInput/tag";
 import "./chipInput.scss";
-import { ErrorMessage, Field } from "formik";
+import { Field } from "formik";
 import { Tooltip } from "antd";
 
 const ChipInput = (props) => {
@@ -15,31 +15,25 @@ const ChipInput = (props) => {
 
   const validate = (value) => {
     let errorMessage;
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      errorMessage = "Invalid email address";
+    const reg = new RegExp(props.regex);
+
+    if (!reg.test(value)) {
+      errorMessage = props.errorMessage;
     }
     return errorMessage;
   };
 
-  // const showErrorMessage = (errorMessage) => {
-  //   console.log("calling");
-  // };
-  // const text = <span>{"not email"}</span>;
-
-  console.log("enter: ", enter);
-
   return (
     <Field name={name}>
-      {({ field: { value }, form: { setFieldValue } }) => {
+      {({ field: { value = [] }, form: { setFieldValue } }) => {
         const deleteEmail = (id) => {
           value.splice(id, 1);
-          setFieldValue("email", value);
+          setFieldValue(name, value);
           console.log("test", value);
         };
 
         return (
           <section className="email-container">
-            {/* {isDelete ? setIsDelete(false) : ""} */}
             {value.map((email, index) => {
               return (
                 <CustomTag
@@ -47,7 +41,6 @@ const ChipInput = (props) => {
                   email={email}
                   deleteEmail={deleteEmail}
                   index={index}
-                  // list={value}
                 />
               );
             })}
@@ -62,32 +55,25 @@ const ChipInput = (props) => {
                   setEmail(event.target.value);
                 }}
                 onKeyDown={(e) => {
+                  setEnter(false);
                   if (
                     e.key === "Backspace" &&
                     email.length === 0 &&
                     value.length > 0
                   ) {
                     value.pop();
-                    setFieldValue("email", value);
+                    setFieldValue(name, value);
                   }
-                  // console.log("e ", e.key);
                 }}
                 onKeyPress={(e) => {
-                  // console.log("e.key: ", e);
-                  setEnter(false);
                   if (e.key === "Enter") {
                     if (validate(email)) {
                       setEnter(true);
-                      // const errorMessage = validate(email);
-                      // console.log("errorMessage: ", errorMessage);
-                      // <ErrorMessage name="email">{errorMessage}</ErrorMessage>;
-                      // showErrorMessage(errorMessage);
-
                       return;
                     }
                     if (email.length > 0) {
                       value.push(email);
-                      setFieldValue("email", value);
+                      setFieldValue(name, value);
                     }
                     setEmail("");
                   }
