@@ -2,14 +2,7 @@ import { Tag, Tooltip } from "antd";
 import "./styles.scss";
 
 const CustomTag = (props) => {
-  let email = props.email;
-  // console.log("email: ", email);
-  // if (email.length > 10) {
-  //   email[8] = ".";
-  //   email[9] = ".";
-  //   email[10] = ".";
-  // }
-  //   console.log("props ", props);
+  const email = props.email;
 
   return (
     <Tag className="tags">

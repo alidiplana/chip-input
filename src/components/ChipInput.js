@@ -1,26 +1,23 @@
 // Render Prop
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import CustomTag from "./chipInput/tag";
-import "./chipInput.scss";
 import { Field } from "formik";
 import { Tooltip } from "antd";
+import "./chipInput.scss";
 
-const ChipInput = (props) => {
-  const { name } = props;
-  // const [isDelete, setIsDelete] = useState(false);
-  const [email, setEmail] = useState();
-
-  const [enter, setEnter] = useState(false);
+const ChipInput = ({ name, errorMessage, regex }) => {
+  const [{ email, enter, curserRemove }, setState] = useState({
+    email: "",
+    enter: false,
+    curserRemove: false,
+  });
 
   const validate = (value) => {
-    let errorMessage;
-    const reg = new RegExp(props.regex);
+    const reg = new RegExp(regex);
 
     if (!reg.test(value)) {
-      errorMessage = props.errorMessage;
+      return errorMessage;
     }
-    return errorMessage;
   };
 
   return (
@@ -29,7 +26,6 @@ const ChipInput = (props) => {
         const deleteEmail = (id) => {
           value.splice(id, 1);
           setFieldValue(name, value);
-          console.log("test", value);
         };
 
         return (
@@ -44,23 +40,38 @@ const ChipInput = (props) => {
                 />
               );
             })}
-            <Tooltip visible={enter} placement="bottom" title={validate(email)}>
+            <Tooltip
+              visible={enter}
+              placement="bottom"
+              title={curserRemove ? "Please Press Enter" : validate(email)}
+            >
               <input
                 placeholder="Enter more emails"
                 className="input"
-                {...props}
                 name={name}
                 value={email}
+                onBlur={(e) => {
+                  if (email) {
+                    setState((st) => ({
+                      ...st,
+                      enter: true,
+                      curserRemove: true,
+                    }));
+                  }
+                }}
                 onChange={(event) => {
-                  setEmail(event.target.value);
+                  setState((st) => ({
+                    ...st,
+                    email: event.target.value,
+                  }));
                 }}
                 onKeyDown={(e) => {
-                  setEnter(false);
-                  if (
-                    e.key === "Backspace" &&
-                    email.length === 0 &&
-                    value.length > 0
-                  ) {
+                  setState((st) => ({
+                    ...st,
+                    enter: false,
+                    curserRemove: false,
+                  }));
+                  if (e.key === "Backspace" && !email && value) {
                     value.pop();
                     setFieldValue(name, value);
                   }
@@ -68,14 +79,20 @@ const ChipInput = (props) => {
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     if (validate(email)) {
-                      setEnter(true);
+                      setState((st) => ({
+                        ...st,
+                        enter: true,
+                      }));
                       return;
                     }
-                    if (email.length > 0) {
+                    if (email) {
                       value.push(email);
                       setFieldValue(name, value);
                     }
-                    setEmail("");
+                    setState((st) => ({
+                      ...st,
+                      email: "",
+                    }));
                   }
                 }}
               />
