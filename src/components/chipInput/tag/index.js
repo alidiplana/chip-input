@@ -5,12 +5,10 @@ const CustomTag = (props) => {
   const email = props.email;
 
   return (
-    <Tag className="tags">
-      <div className="tag">
-        <Tooltip title={props.email}>
-          {email.length > 14 ? email.substring(0, 14) + "..." : email}
-        </Tooltip>
-      </div>
+    <Tag className="tag">
+      <Tooltip title={props.email}>
+        {email.length > 13 ? email.substring(0, 13) + "..." : email}
+      </Tooltip>
       <div onClick={() => props.deleteEmail(props.index)} className="close">
         {
           <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8">

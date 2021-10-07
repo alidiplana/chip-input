@@ -1,25 +1,15 @@
-.tags {
+.tag.ant-tag {
   display: flex;
   box-sizing: border-box;
-  //   min-height: 50px;
-  //   width: min-content;
-  //   color: #777;
-  // margin: 7px 0;
+  font-family: Roboto;
   gap: 10px;
-  // width: 100px;
-  //   background-color: #ccc;
-  padding: 2px 8px;
+  font-size: 14px;
   border-radius: 2.5px;
-  //   background-color: #ccc;
+  margin: unset;
+  color: #777;
+}
 
-  .tag {
-    font-family: Roboto;
-    font-size: 14px;
-    color: #777;
-  }
-
-  .close {
-    color: #777;
-    cursor: pointer;
-  }
+.close {
+  color: #777;
+  cursor: pointer;
 }
